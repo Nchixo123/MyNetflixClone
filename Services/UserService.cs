@@ -1,5 +1,6 @@
 ﻿using Dtos;
 using Extensions;
+using Microsoft.EntityFrameworkCore;
 using RepoInterfaces;
 using ServiceInterfaces;
 
@@ -101,5 +102,13 @@ public class UserService : IUserService
         _unitOfWork.UserRepository.Update(user);
         await _unitOfWork.SaveChangesAsync();
         return true;
+    }
+    public async Task<UserDto> ValidateUserAsync(string username, string password)
+    {
+        var user = await _unitOfWork.UserRepository.Set()
+            .FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
+
+        ArgumentNullException.ThrowIfNull(user,nameof(user));
+        return user;
     }
 }

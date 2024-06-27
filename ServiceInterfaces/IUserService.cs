@@ -13,4 +13,5 @@ public interface IUserService
     Task AddFavoriteMovieAsync(int userId, int movieId);
     Task<UserDto> GetUserByEmailAsync(string email);
     Task<bool> ChangePasswordAsync(int userId, string currentPassword, string newPassword);
+    Task<UserDto> ValidateUserAsync(string username, string password);
 }
