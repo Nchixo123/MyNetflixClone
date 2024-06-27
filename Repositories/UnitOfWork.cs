@@ -2,12 +2,12 @@
 
 namespace Repositories
 {
-    internal class UnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly NetflixDbContext _context;
-        private Lazy<IMovieRepository> _movieRepository;
-        private Lazy<IUserRepository> _userRepository;
-        private Lazy<IUserRatingsRepository> _userRatingRepository;
+        private readonly Lazy<IMovieRepository> _movieRepository;
+        private readonly Lazy<IUserRepository> _userRepository;
+        private readonly Lazy<IUserRatingsRepository> _userRatingRepository;
 
         public UnitOfWork(NetflixDbContext context)
         {
@@ -24,6 +24,11 @@ namespace Repositories
         public int SaveChanges()
         {
             return _context.SaveChanges();
+        }
+
+        public Task<int> SaveChangesAsync() 
+        { 
+            return _context.SaveChangesAsync(); 
         }
 
         public void BeginTransaction()

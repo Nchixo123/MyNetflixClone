@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34701.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNetflixClone", "MyNetflixClone\MyNetflixClone.csproj", "{53CB8559-9064-41CB-8554-40311514AA54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyNetflixClone", "MyNetflixClone\MyNetflixClone.csproj", "{53CB8559-9064-41CB-8554-40311514AA54}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Aggregations", "Aggregations", "{61955F17-FB56-4025-B4A8-9E89F11F301E}"
 EndProject
@@ -13,23 +13,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B19375A4-B1AD-4C17-BDC3-FF68B40844C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Repositories\Repositories.csproj", "{C2E9675A-E56D-44A8-AD12-B13B6400B59B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "Repositories\Repositories.csproj", "{C2E9675A-E56D-44A8-AD12-B13B6400B59B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RepositoryInterfaces", "RepositoryInterfaces", "{BC853739-36A8-47D9-AE7F-BB81DB32944B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoInterfaces", "RepoInterfaces\RepoInterfaces.csproj", "{E97F12CE-2EA4-4AAC-A2A0-7C309A668BB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RepoInterfaces", "RepoInterfaces\RepoInterfaces.csproj", "{E97F12CE-2EA4-4AAC-A2A0-7C309A668BB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dtos", "Dtos\Dtos.csproj", "{684EA879-1559-461F-A9A6-52BA4E8E3C66}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dtos", "Dtos\Dtos.csproj", "{684EA879-1559-461F-A9A6-52BA4E8E3C66}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AutoMapper", "AutoMapper", "{500EB3D9-2B83-4359-AA81-46FBC8405E26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mapper", "Mapper\Mapper.csproj", "{DE71EECF-5423-4627-847A-7B9A2E8C892D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mapper", "Mapper\Mapper.csproj", "{DE71EECF-5423-4627-847A-7B9A2E8C892D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{81DD6BE9-49C6-49BD-A752-7711A882E0BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{81DD6BE9-49C6-49BD-A752-7711A882E0BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{E1B60B96-3638-4EFE-AF4D-DB8A6FD9182C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{E1B60B96-3638-4EFE-AF4D-DB8A6FD9182C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validations", "Validations\Validations.csproj", "{63C7E8E3-9C93-42FE-8B68-0C950C78A88F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Validations", "Validations\Validations.csproj", "{63C7E8E3-9C93-42FE-8B68-0C950C78A88F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServiceInterfaces", "ServiceInterfaces", "{AF82ED75-4331-4465-ADD5-940EB628B09F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceInterfaces", "ServiceInterfaces\ServiceInterfaces.csproj", "{0A82BD86-E115-4735-916D-7295537A854B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extensions", "Extensions\Extensions.csproj", "{93A0E833-D83F-4ED0-A229-64F1C6BDD8B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +75,14 @@ Global
 		{63C7E8E3-9C93-42FE-8B68-0C950C78A88F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63C7E8E3-9C93-42FE-8B68-0C950C78A88F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63C7E8E3-9C93-42FE-8B68-0C950C78A88F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A82BD86-E115-4735-916D-7295537A854B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A82BD86-E115-4735-916D-7295537A854B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A82BD86-E115-4735-916D-7295537A854B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A82BD86-E115-4735-916D-7295537A854B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93A0E833-D83F-4ED0-A229-64F1C6BDD8B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93A0E833-D83F-4ED0-A229-64F1C6BDD8B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93A0E833-D83F-4ED0-A229-64F1C6BDD8B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93A0E833-D83F-4ED0-A229-64F1C6BDD8B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +97,9 @@ Global
 		{81DD6BE9-49C6-49BD-A752-7711A882E0BD} = {1C521D7D-1EC3-4D0B-83DD-7E71E86411E8}
 		{E1B60B96-3638-4EFE-AF4D-DB8A6FD9182C} = {1C521D7D-1EC3-4D0B-83DD-7E71E86411E8}
 		{63C7E8E3-9C93-42FE-8B68-0C950C78A88F} = {1C521D7D-1EC3-4D0B-83DD-7E71E86411E8}
+		{AF82ED75-4331-4465-ADD5-940EB628B09F} = {1C521D7D-1EC3-4D0B-83DD-7E71E86411E8}
+		{0A82BD86-E115-4735-916D-7295537A854B} = {AF82ED75-4331-4465-ADD5-940EB628B09F}
+		{93A0E833-D83F-4ED0-A229-64F1C6BDD8B2} = {1C521D7D-1EC3-4D0B-83DD-7E71E86411E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {950BAF2F-100B-49DA-BB99-EF10B9CCB915}

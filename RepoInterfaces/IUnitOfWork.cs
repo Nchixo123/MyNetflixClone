@@ -6,6 +6,7 @@ public interface IUnitOfWork : IDisposable
     IUserRepository UserRepository { get; }
     IUserRatingsRepository UserRatingRepository { get; }
     int SaveChanges();
+    Task<int> SaveChangesAsync();
     void BeginTransaction();
     void CommitTransaction();
     void RollBack();

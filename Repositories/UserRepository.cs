@@ -4,7 +4,7 @@ using RepoInterfaces;
 
 namespace Repositories;
 
-internal class UserRepository : RepositoryBase<UserDto>, IUserRepository
+internal sealed class UserRepository : RepositoryBase<UserDto>, IUserRepository
 {
     public UserRepository(NetflixDbContext context) : base(context)
     {
