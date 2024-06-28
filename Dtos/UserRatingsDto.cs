@@ -15,7 +15,7 @@ namespace Dtos
         [Required]
         public int MovieId { get; set; }
 
-        [Required, Column(TypeName = "decimal(3,2)"),RatingRange(1,5)]
+        [Required, Column(TypeName = "decimal(3,2)"), RatingRange(1, 5)]
         public decimal Rating { get; set; }
 
         [ForeignKey("UserId")]

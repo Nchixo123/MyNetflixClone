@@ -5,11 +5,14 @@ namespace Validations;
 
 public class EnglishLettersAndNumbersAttribute : ValidationAttribute
 {
-    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+    protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
     {
         var regex = new Regex("^[a-zA-Z0-9]*$");
-        ArgumentNullException.ThrowIfNull(value, "value cant be null");
-        if (!regex.IsMatch(value.ToString()))
+        if (value == null)
+        {
+            return new ValidationResult($"The {validationContext.DisplayName} field cannot be null.");
+        }
+        if (!value.Equals(null) && !regex.IsMatch(value.ToString()))
         {
             return new ValidationResult($"The {validationContext.DisplayName} field can only contain English letters and numbers.");
         }
@@ -17,3 +20,4 @@ public class EnglishLettersAndNumbersAttribute : ValidationAttribute
         return ValidationResult.Success;
     }
 }
+
