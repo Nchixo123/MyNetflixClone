@@ -1,6 +1,7 @@
 ﻿using Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Models;
+using MyNetflixClone.Interfaces;
 using ServiceInterfaces;
 
 namespace MyNetflixClone.Controllers;
@@ -10,10 +11,12 @@ namespace MyNetflixClone.Controllers;
 public class MovieController : ControllerBase
 {
     private readonly IMovieService _movieService;
+    private readonly IS3Service _s3Service;
 
-    public MovieController(IMovieService movieService)
+    public MovieController(IMovieService movieService, IS3Service s3Service)
     {
         _movieService = movieService;
+        _s3Service = s3Service;
     }
 
     [HttpGet]
@@ -109,4 +112,18 @@ public class MovieController : ControllerBase
         await _movieService.AddUserRatingAsync(movieId, userId, rating);
         return NoContent();
     }
+
+    [HttpPost("upload")]
+    public async Task<IActionResult> UploadMovie(IFormFile file)
+    {
+        if (file == null || file.Length == 0)
+            return BadRequest("No file uploaded.");
+
+        using var stream = file.OpenReadStream();
+        var fileName = $"{Guid.NewGuid()}_{file.FileName}";
+        var url = await _s3Service.UploadMovieAsync(stream, fileName);
+
+        return Ok(new { Url = url });
+    }
+
 }
