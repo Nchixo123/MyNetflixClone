@@ -28,6 +28,7 @@ public class MovieService : IMovieService
 
     public async Task<MovieDto> CreateMovieAsync(MovieDto movieDto)
     {
+        ArgumentNullException.ThrowIfNull(movieDto, nameof(movieDto));
         _unitOfWork.MovieRepository.Insert(movieDto);
         await _unitOfWork.SaveChangesAsync();
         return movieDto;

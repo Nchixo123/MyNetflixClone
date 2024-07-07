@@ -8,23 +8,23 @@ public class MovieDto
     [Key]
     public int Id { get; set; }
 
-    [Required, MaxLength(255), EnglishLettersAndNumbers]
-    public string Title { get; set; } = null!;
+    [MaxLength(255), EnglishLettersAndNumbers]
+    public string Title { get; set; } = string.Empty;
 
-    [Required, MaxLength(100), EnglishLettersAndNumbers]
-    public string Genre { get; set; } = null!;
+    [MaxLength(100), EnglishLettersAndNumbers]
+    public string Genre { get; set; } = string.Empty;
 
     [MaxLength(1000), EnglishLettersAndNumbers]
-    public string Description { get; set; } = null!;
+    public string Description { get; set; } = string.Empty;
 
     [MaxLength(255), EnglishLettersAndNumbers]
-    public string Director { get; set; } = null!;
+    public string Director { get; set; } = string.Empty;
 
     [MaxLength(500)]
-    public string ImageUrl { get; set; } = null!;
+    public string ImageUrl { get; set; } = string.Empty;
 
     [MaxLength(500)]
-    public string VideoUrl { get; set; } = null!;
+    public string VideoUrl { get; set; } = string.Empty;
 
     [Column(TypeName = "decimal(3,2)")]
     public decimal? AverageRating { get; set; }

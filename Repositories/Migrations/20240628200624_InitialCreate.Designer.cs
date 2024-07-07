@@ -12,7 +12,7 @@ using Repositories;
 namespace Repositories.Migrations
 {
     [DbContext(typeof(NetflixDbContext))]
-    [Migration("20240628132429_InitialCreate")]
+    [Migration("20240628200624_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
