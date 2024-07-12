@@ -1,4 +1,5 @@
 ﻿using Amazon.S3;
+using Amazon.S3.Model;
 using Amazon.S3.Transfer;
 using Microsoft.Extensions.Configuration;
 using MyNetflixClone.Interfaces;
@@ -25,6 +26,22 @@ namespace MyNetflixClone.Services
             await fileTransferUtility.UploadAsync(fileStream, bucketName, fileName);
 
             return $"https://{bucketName}.s3.{region}.amazonaws.com/{fileName}";
+        }
+
+        public string GenerateSecureUrl(string key)
+        {
+            var bucketName = _configuration["AWS:BucketName"];
+            var region = _configuration["AWS:Region"];
+
+            var request = new GetPreSignedUrlRequest
+            {
+                BucketName = bucketName,
+                Key = key,
+                Expires = DateTime.UtcNow.AddHours(1), // URL valid for 1 hour
+                Verb = HttpVerb.GET
+            };
+
+            return _s3Client.GetPreSignedURL(request);
         }
     }
 }

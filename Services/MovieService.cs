@@ -89,4 +89,27 @@ public class MovieService : IMovieService
         _unitOfWork.MovieRepository.Update(movie);
         await _unitOfWork.SaveChangesAsync();
     }
+
+    public async Task<MovieDto?> GetMovieByTitleAsync(string title)
+    {
+        return await _unitOfWork.MovieRepository.Set(m => m.Title == title).FirstOrDefaultAsync();
+    }
+
+    public async Task<IEnumerable<MovieDto>> FilterMoviesAsync(string genre, decimal? minRating)
+    {
+        var query = _unitOfWork.MovieRepository.Set();
+
+        if (!string.IsNullOrEmpty(genre))
+        {
+            query = query.Where(m => m.Genre == genre);
+        }
+
+        if (minRating.HasValue)
+        {
+            query = query.Where(m => m.AverageRating >= minRating);
+        }
+
+        return await query.ToListAsync();
+    }
+
 }

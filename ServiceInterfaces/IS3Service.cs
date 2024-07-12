@@ -1,6 +1,8 @@
-﻿namespace MyNetflixClone.Interfaces;
+﻿
+namespace MyNetflixClone.Interfaces;
 
 public interface IS3Service
 {
     Task<string> UploadMovieAsync(Stream fileStream, string fileName);
+    string GenerateSecureUrl(string key);
 }

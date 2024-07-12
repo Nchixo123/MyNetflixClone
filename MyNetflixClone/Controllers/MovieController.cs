@@ -37,6 +37,21 @@ public class MovieController : ControllerBase
         return Ok(movie);
     }
 
+    // In MovieController.cs
+    [HttpPost("{title}/rate")]
+    public async Task<IActionResult> AddUserRating(string title, int userId, decimal rating)
+    {
+        var movie = await _movieService.GetMovieByTitleAsync(title);
+        if (movie == null)
+        {
+            return NotFound($"Movie with title {title} not found.");
+        }
+
+        await _movieService.AddUserRatingAsync(movie.Id, userId, rating);
+        return NoContent();
+    }
+
+
     [HttpPost]
     public async Task<ActionResult<MovieDto>> CreateMovie(MovieModel movieModel)
     {
@@ -106,13 +121,6 @@ public class MovieController : ControllerBase
         return Ok(movies);
     }
 
-    [HttpPost("{movieId}/rate")]
-    public async Task<IActionResult> AddUserRating(int movieId, int userId, decimal rating)
-    {
-        await _movieService.AddUserRatingAsync(movieId, userId, rating);
-        return NoContent();
-    }
-
     [HttpPost("upload")]
     public async Task<IActionResult> UploadMovie(IFormFile file)
     {
@@ -124,6 +132,27 @@ public class MovieController : ControllerBase
         var url = await _s3Service.UploadMovieAsync(stream, fileName);
 
         return Ok(new { Url = url });
+    }
+
+    [HttpGet("{id}/stream")]
+    public async Task<IActionResult> StreamMovie(int id)
+    {
+        var movie = await _movieService.GetMovieByIdAsync(id);
+        if (movie == null)
+        {
+            return NotFound();
+        }
+
+        var secureUrl = _s3Service.GenerateSecureUrl(movie.VideoUrl);
+
+        return Ok(new { Url = secureUrl });
+    }
+
+    [HttpGet("filter")]
+    public async Task<ActionResult<IEnumerable<MovieDto>>> FilterMovies([FromQuery] string genre, [FromQuery] decimal? minRating)
+    {
+        var movies = await _movieService.FilterMoviesAsync(genre, minRating);
+        return Ok(movies);
     }
 
 }
