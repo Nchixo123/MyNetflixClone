@@ -97,19 +97,19 @@ public class MovieService : IMovieService
 
     public async Task<IEnumerable<MovieDto>> FilterMoviesAsync(string genre, decimal? minRating)
     {
-        var query = _unitOfWork.MovieRepository.Set();
+        var set = _unitOfWork.MovieRepository.Set();
 
         if (!string.IsNullOrEmpty(genre))
         {
-            query = query.Where(m => m.Genre == genre);
+            set = set.Where(m => m.Genre == genre);
         }
 
         if (minRating.HasValue)
         {
-            query = query.Where(m => m.AverageRating >= minRating);
+            set = set.Where(m => m.AverageRating >= minRating);
         }
 
-        return await query.ToListAsync();
+        return await set.AsNoTracking().ToListAsync();
     }
 
 }

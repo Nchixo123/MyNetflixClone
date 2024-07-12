@@ -26,6 +26,7 @@
     <ProjectReference Include="..\Repositories\Repositories.csproj" />
     <ProjectReference Include="..\ServiceInterfaces\ServiceInterfaces.csproj" />
     <ProjectReference Include="..\Services\Services.csproj" />
+    <ProjectReference Include="..\TestDataLibrary\TestDataLibrary.csproj" />
   </ItemGroup>
 
 </Project>
