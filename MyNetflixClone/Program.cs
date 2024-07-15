@@ -1,4 +1,5 @@
 using Extensions;
+using Microsoft.OpenApi.Models;
 using MyNetflixClone.LocalConfiguration;
 using Repositories;
 using Serilog;
@@ -23,11 +24,17 @@ namespace MyNetflixClone
             {
                 options.AddPolicy("CorsPolicy", builder =>
                 {
-                    builder.WithOrigins("http://localhost:5173")
+                    builder.WithOrigins("http://localhost:3000")
                              .AllowAnyMethod()
                              .AllowAnyHeader()
                              .AllowCredentials();
                 });
+            });
+
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
 
             var app = builder.Build();
@@ -37,10 +44,7 @@ namespace MyNetflixClone
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "MyNetflixClone v1");
-                });
+                app.UseSwaggerUI();
             }
 
             app.UseSerilogRequestLogging();
@@ -48,8 +52,8 @@ namespace MyNetflixClone
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseMiddleware<GlobalExceptionHandler>();
-            app.MapControllers();
-            app.UseCors();
+
+            app.UseCors("CorsPolicy");
 
 
             using var scope = app.Services.CreateScope();
@@ -66,7 +70,7 @@ namespace MyNetflixClone
                 logger.LogError(ex, "An Error Has Occured During Migration");
             }
 
-
+            app.MapControllers();
             app.Run();
         }
     }

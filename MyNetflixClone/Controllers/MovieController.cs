@@ -19,7 +19,7 @@ public class MovieController : ControllerBase
         _s3Service = s3Service;
     }
 
-    [HttpGet]
+    [HttpGet("movie")]
     public async Task<ActionResult<IEnumerable<MovieDto>>> GetAllMovies()
     {
         var movies = await _movieService.GetAllMoviesAsync();
@@ -37,7 +37,6 @@ public class MovieController : ControllerBase
         return Ok(movie);
     }
 
-    // In MovieController.cs
     [HttpPost("{title}/rate")]
     public async Task<IActionResult> AddUserRating(string title, int userId, decimal rating)
     {

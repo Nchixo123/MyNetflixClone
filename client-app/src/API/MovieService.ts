@@ -4,13 +4,14 @@ import apiClient from './AxiosConfig';
 
 export const getMovies = async () => {
     try {
-        const response = await apiClient.get('/api/movie');
+        const response = await apiClient.get('/Movie/movie');
         return response.data;
     } catch (error) {
         console.error('Error fetching movies:', error);
         throw error;
     }
 };
+
 
 export const getMovieById = async (id: number): Promise<MovieModel> => {
     try {
