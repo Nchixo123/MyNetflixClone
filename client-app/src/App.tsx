@@ -7,6 +7,7 @@ import LoginPage from './Pages/LoginPage';
 import SignUpPage from './Pages/SignUpPage';
 import { useAuth } from './Components/AuthContext';
 import MovieDetailsPage from './Pages/MovieDetailsPage';
+import AdminPage from './Pages/AdminPage';
 
 const App: React.FC = () => {
     const { isAuthenticated } = useAuth();
@@ -17,7 +18,8 @@ const App: React.FC = () => {
                 <Route path="/profile" element={isAuthenticated ? <UserProfilePage /> : <Navigate to="/login" />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<SignUpPage />} />
-                <Route path="/movies/:id" element={<MovieDetailsPage />} />
+                <Route path="/movie/:id" element={<MovieDetailsPage />} />
+                <Route path="/admin" element={<AdminPage />} />
             </Routes>
     );
 };

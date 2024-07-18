@@ -111,4 +111,12 @@ public class UserService : IUserService
         ArgumentNullException.ThrowIfNull(user,nameof(user));
         return user;
     }
+
+    public async Task<bool> IsFavoriteMovieAsync(int userId, int movieId)
+    {
+        var user = await _unitOfWork.UserRepository.GetAsync(userId);
+        if (user == null) return false;
+
+        return user.FavoriteMovies.Any(m => m.Id == movieId);
+    }
 }

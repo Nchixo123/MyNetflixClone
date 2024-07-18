@@ -122,4 +122,11 @@ public class UserController : ControllerBase
         }
         return NoContent();
     }
+
+    [HttpGet("{userId}/favorite/{movieId}")]
+    public async Task<IActionResult> IsFavoriteMovie(int userId, int movieId)
+    {
+        var isFavorite = await _userService.IsFavoriteMovieAsync(userId, movieId);
+        return Ok(new { IsFavorite = isFavorite });
+    }
 }

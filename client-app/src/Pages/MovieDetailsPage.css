@@ -1,0 +1,33 @@
+
+.click-animation {
+    transition: transform 0.2s ease-in-out;
+}
+
+.click-animation:active {
+        transform: scale(0.95);
+}
+
+.movie-details-container {
+    display: flex;
+}
+
+.details-container {
+    flex: 1;
+}
+
+.player-wrapper {
+    flex: 1;
+}
+
+.react-player-container {
+    position: relative;
+    padding-top: 56.25%;
+}
+
+    .react-player-container > div {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }

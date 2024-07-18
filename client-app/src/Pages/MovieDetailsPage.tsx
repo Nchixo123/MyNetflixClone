@@ -2,16 +2,18 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Navbar from '../Components/Navbar';
-import { getMovieById, getSecureStreamUrl, addUserRating } from '../API/MovieService';
+import { getMovieById, addUserRating, toggleFavoriteMovie, checkIfFavorite } from '../API/MovieService';
 import { MovieModel } from '../Models/MovieModel';
+import ReactStars from 'react-stars';
 import ReactPlayer from 'react-player';
 import { useAuth } from '../Components/AuthContext';
+import './MovieDetailsPage.css';
 
 const MovieDetailsPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const [movie, setMovie] = useState<MovieModel | null>(null);
-    const [secureUrl, setSecureUrl] = useState<string | null>(null);
     const [rating, setRating] = useState<number>(0);
+    const [isFavorite, setIsFavorite] = useState<boolean>(false);
     const { token } = useAuth();
 
     useEffect(() => {
@@ -21,8 +23,12 @@ const MovieDetailsPage: React.FC = () => {
                     const movieData = await getMovieById(parseInt(id));
                     setMovie(movieData);
 
-                    const secureUrlData = await getSecureStreamUrl(parseInt(id));
-                    setSecureUrl(secureUrlData.url);
+                    // Check if the movie is a favorite
+                    if (token) {
+                        const userId = parseTokenForUserId(token);
+                        const isFav = await checkIfFavorite(movieData.id, userId);
+                        setIsFavorite(isFav);
+                    }
                 } catch (error) {
                     console.error('Error fetching movie:', error);
                 }
@@ -30,16 +36,29 @@ const MovieDetailsPage: React.FC = () => {
         };
 
         fetchMovie();
-    }, [id]);
+    }, [id, token]);
 
-    const handleRating = async (rating: number) => {
+    const handleRating = async (newRating: number) => {
+        setRating(newRating);
         if (movie && token) {
             const userId = parseTokenForUserId(token);
             try {
-                await addUserRating(movie.title, userId, rating);
+                await addUserRating(movie.title, userId, newRating);
                 alert('Rating submitted successfully!');
             } catch (error) {
                 console.error('Error adding rating:', error);
+            }
+        }
+    };
+
+    const handleToggleFavorite = async () => {
+        if (movie && token) {
+            const userId = parseTokenForUserId(token);
+            try {
+                await toggleFavoriteMovie(movie.id, userId);
+                setIsFavorite(!isFavorite);
+            } catch (error) {
+                console.error('Error toggling favorite:', error);
             }
         }
     };
@@ -49,45 +68,45 @@ const MovieDetailsPage: React.FC = () => {
         return decodedToken.userId;
     };
 
-    if (!movie || !secureUrl) {
+    if (!movie) {
         return <div>Loading...</div>;
     }
 
     return (
         <div className="min-h-screen bg-[#FFFAE6] flex flex-col">
             <Navbar />
-            <div className="flex-grow flex items-center justify-center">
-                <div className="w-full max-w-4xl mt-20 flex flex-col items-center">
-                    <h1 className="text-4xl font-bold text-[#002379] text-center mb-8">{movie.title}</h1>
-                    <img src={movie.imageUrl} alt={movie.title} className="w-full h-80 object-cover rounded-lg mb-4" />
+            <div className="flex-grow flex mt-10 ml-10">
+                <div className="w-full max-w-sm flex flex-col items-start">
+                    <img src={movie.imageUrl} alt={movie.title} className="w-64 h-auto object-cover rounded-lg mb-4" />
+                    <h1 className="text-4xl font-bold text-[#002379] mb-4">{movie.title}</h1>
                     <p className="text-lg text-gray-700 mb-4">{movie.description}</p>
-                    <p className="text-lg text-gray-700 mb-4">Directed by: {movie.director}</p>
-                    <p className="text-lg text-gray-700 mb-4">Genre: {movie.genre}</p>
-                    <div className="w-full h-80 rounded-lg mb-4">
-                        <ReactPlayer url={secureUrl} controls width="100%" height="100%" />
-                    </div>
+                    <p className="text-lg text-gray-700 mb-2">Directed by: {movie.director}</p>
+                    <p className="text-lg text-gray-700 mb-2">Genre: {movie.genre}</p>
                     <div className="mt-4">
-                        <label htmlFor="rating" className="block text-gray-700">Rate this movie:</label>
-                        <select
-                            id="rating"
+                        <label htmlFor="rating" className="block text-gray-700 mb-2">Rate this movie:</label>
+                        <ReactStars
+                            count={5}
+                            onChange={handleRating}
+                            size={24}
+                            color2={'#ffd700'}
                             value={rating}
-                            onChange={(e) => setRating(parseInt(e.target.value))}
-                            className="w-full px-3 py-2 border rounded"
-                        >
-                            <option value="0">Select Rating</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
+                        />
                         <button
                             onClick={() => handleRating(rating)}
-                            className="bg-[#002379] text-white px-4 py-2 rounded mt-2"
+                            className="bg-[#002379] text-white px-4 py-2 rounded mt-2 click-animation"
                         >
                             Submit Rating
                         </button>
+                        <button
+                            onClick={handleToggleFavorite}
+                            className={`mt-2 px-4 py-2 rounded ${isFavorite ? 'bg-red-500' : 'bg-green-500'} text-white click-animation`}
+                        >
+                            {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
+                        </button>
                     </div>
+                </div>
+                <div className="flex-grow flex justify-center items-start">
+                    <ReactPlayer url={movie.videoUrl} controls width="50%" height="400px" className="mb-8 rounded-lg" />
                 </div>
             </div>
         </div>
